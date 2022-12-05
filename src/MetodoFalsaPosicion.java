@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class MetodoFalsaPosicion {
-    public static void main(String[] args) {
+    public void main() {
         int grado_ecuacion=1;
         float x1=0, x2=0, errorAbs=0;
         Scanner scanner = new Scanner(System.in);

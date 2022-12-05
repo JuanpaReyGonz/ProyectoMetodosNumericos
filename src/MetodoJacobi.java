@@ -1,10 +1,9 @@
 import java.util.Scanner;
 
 public class MetodoJacobi {
-    public static void main(String[] args) {
+    public void main() {
         Scanner scanner = new Scanner(System.in);
-        float errorAbs=0;
-        /*float matriz[][] = new float[3][4];
+        float matriz[][] = new float[3][4];
         System.out.println("======================================== MÉTODO JACOBI ==========================================");
         System.out.println("=================================================================================================");
         System.out.println("|Método Iterativo para resolver sistemas de ecuaciones lineales.                                |");
@@ -25,8 +24,8 @@ public class MetodoJacobi {
             }
             System.out.println("============================");
         }
-        imprimirMatriz(matriz);*/
-        float [][] matriz = {{2,5,2,3},{4,-1,1,8},{1,2,4,11}};
+        imprimirMatriz(matriz);
+        //float [][] matriz = {{2,5,2,3},{4,-1,1,8},{1,2,4,11}};
         ordenarMatriz(matriz);
         System.out.println("Matriz Ordenada");
         imprimirMatriz(matriz);
@@ -54,7 +53,6 @@ public class MetodoJacobi {
                 matriz[0][i]=x1[i];
                 matriz[1][i]=temporal[i];
             }
-            System.out.println("Soy matriz 2");
             imprimirMatriz(matriz);
         }
         else if(matriz[2][0] >= matriz[0][0] && matriz[2][0] >= matriz[1][0]){
@@ -69,7 +67,6 @@ public class MetodoJacobi {
                 matriz[0][i]=x1[i];
                 matriz[2][i]=temporal[i];
             }
-            System.out.println("Soy matriz 3");
             imprimirMatriz(matriz);
         }
         //Obtener 2da coeficiente sin tomar en cuenta al [0][1]
@@ -102,16 +99,25 @@ public class MetodoJacobi {
             despejex2=(matriz[1][3]-valorInicial1*matriz[1][0]-valorInicial3*matriz[1][2])/matriz[1][1];
             despejex3=(matriz[2][3]-valorInicial1*matriz[2][0]-valorInicial2*matriz[2][1])/matriz[2][2];
 
+            despejex1= (float) (Math.round(despejex1*100000d)/100000d);
+            despejex2= (float) (Math.round(despejex2*100000d)/100000d);
+            despejex3= (float) (Math.round(despejex3*100000d)/100000d);
+
             System.out.println("[x1(k): "+valorInicial1+"] [x2(k): "+valorInicial2+"] [x3(k): "+valorInicial3+"] [x1(k+1): "+despejex1
             +"] [x2(k+1): "+despejex2+"] [x3(k+1): "+despejex3+"]");
+
+            if(valorInicial1==despejex1 && valorInicial2==despejex2 && valorInicial3==despejex3){
+                System.out.println("Se detiene el ciclo en la iteración: {"+iteracion+"}, ya que no se encontró cambio en los valores de x1, x2 y x3.");
+                System.out.println("Solución: [x1: "+valorInicial1+"] [x2: "+valorInicial2+"] [x3: "+valorInicial3+"]");
+                System.exit(0);
+            }
 
             valorInicial1=despejex1;
             valorInicial2=despejex2;
             valorInicial3=despejex3;
             iteracion++;
-        }while(iteracion<=20);
-
-
+        }while(iteracion<=30);
+        System.out.println("Se detiene el ciclo en la iteración 30, ya que no se ha logrado en las iteraciones anteriores el paro del ciclo, con lo que se evita consumo de CPU y memoria.");
+        System.out.println("Solución APROXIMADA: [x1: "+valorInicial1+"] [x2: "+valorInicial2+"] [x3: "+valorInicial3+"]");
     }
-
 }
