@@ -1,13 +1,11 @@
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.util.Scanner;
 
-public class MetodoJacobi {
+public class MetodoGaussSeidel {
     public void main() {
         Scanner scanner = new Scanner(System.in);
         float matriz[][] = new float[3][4];
         float x1=0, x2=0, x3=0;
-        System.out.println("======================================== MÉTODO JACOBI ==========================================");
+        System.out.println("============================= MÉTODO GAUSS SEIDEL - SIN RELAJACIÓN ==============================");
         System.out.println("=================================================================================================");
         System.out.println("|Método Iterativo para resolver sistemas de ecuaciones lineales.                                |");
         System.out.println("=================================================================================================");
@@ -37,15 +35,15 @@ public class MetodoJacobi {
         imprimirMatriz(matriz);
         //float [][] matriz = {{2,5,2,3},{4,-1,1,8},{1,2,4,11}};
         ordenarMatriz(matriz);
-        System.out.println("Matriz Ordenada");
+        System.out.println("Matriz Ordenada por Diagonal de Coeficientes");
         imprimirMatriz(matriz);
 
-        procesoJacobi(matriz, x1, x2, x3);
+        procesoGaussSeidel(matriz, x1, x2, x3);
     }
 
     public static void  imprimirMatriz(float[][] matriz){
         for (int i=0; i<=2; i++){
-                System.out.println("["+matriz[i][0]+" x1] "+"["+matriz[i][1]+" x2] "+"["+matriz[i][2]+" x3] = "+matriz[i][3]);
+            System.out.println("["+matriz[i][0]+" x1] "+"["+matriz[i][1]+" x2] "+"["+matriz[i][2]+" x3] = "+matriz[i][3]);
         }
     }
 
@@ -95,7 +93,7 @@ public class MetodoJacobi {
         }
     }
 
-    public static void procesoJacobi(float[][] matriz, float valorInicial1, float valorInicial2, float valorInicial3){
+    public static void procesoGaussSeidel(float[][] matriz, float valorInicial1, float valorInicial2, float valorInicial3){
         //Despejar a x1, x2, x3
         System.out.println("Ecuaciones despejadas: ");
         System.out.println("x1= [("+matriz[0][3]+") - ("+matriz[0][1]+") - ("+matriz[0][2]+")]/"+matriz[0][0]);
@@ -106,15 +104,15 @@ public class MetodoJacobi {
         do{
             System.out.println("Iteración "+iteracion+": ");
             despejex1=(matriz[0][3]-(valorInicial2*matriz[0][1])-(valorInicial3*matriz[0][2]))/matriz[0][0];
-            despejex2=(matriz[1][3]-valorInicial1*matriz[1][0]-valorInicial3*matriz[1][2])/matriz[1][1];
-            despejex3=(matriz[2][3]-valorInicial1*matriz[2][0]-valorInicial2*matriz[2][1])/matriz[2][2];
+            despejex2=(matriz[1][3]-despejex1*matriz[1][0]-valorInicial3*matriz[1][2])/matriz[1][1];
+            despejex3=(matriz[2][3]-despejex1*matriz[2][0]-despejex2*matriz[2][1])/matriz[2][2];
 
             despejex1= (float) (Math.round(despejex1*100000d)/100000d);
             despejex2= (float) (Math.round(despejex2*100000d)/100000d);
             despejex3= (float) (Math.round(despejex3*100000d)/100000d);
 
             System.out.println("[x1(k): "+valorInicial1+"] [x2(k): "+valorInicial2+"] [x3(k): "+valorInicial3+"] [x1(k+1): "+despejex1
-            +"] [x2(k+1): "+despejex2+"] [x3(k+1): "+despejex3+"]");
+                    +"] [x2(k+1): "+despejex2+"] [x3(k+1): "+despejex3+"]");
 
             if(valorInicial1==despejex1 && valorInicial2==despejex2 && valorInicial3==despejex3){
                 System.out.println("Se detiene el ciclo en la iteración: {"+iteracion+"}, ya que no se encontró cambio en los valores de x1, x2 y x3.");
